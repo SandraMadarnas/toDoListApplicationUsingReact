@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 function ToDoList() {
-    const [tasks, setTasks] = useState([]);                   //Array vacío que almacenará las tareas.
-    const [currentTask, setCurrentTask] = useState("");       //String vacío que representa la tarea actual q está siendo escrita x el usuario.
+    const [tasks, setTasks] = useState([]);              //Array vacío que almacenará las tareas.
+    const [currentTask, setCurrentTask] = useState("");  //String vacío que representa la tarea actual q está siendo escrita x el usuario.
 
     const addTask = () => {
         if (currentTask !== "") {
