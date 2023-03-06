@@ -1,27 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 function App() {
     const [inputText, setInputText] = useState("");  //String vacío que contiene el texto del campo de entrada de la app.
     const [items, setItems] = useState([]);          //Array vacío que contendrá los elementos de la lista de tareas.
+    const [erase, setErase] = useState();
+
+    useEffect(() => {
+        if (erase) {
+            let newArray = items.filter((element) => element.id != erase);
+            setItems(newArray);
+        }
+    }, [erase]);
+
 
     const updateText = (e) => {
-        setInputText(e.target.value);                //Actualiza el estado de inpuntText.
+        setInputText(e.target.value);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();                         //Compruebo si inputText está vacío o no y si no lo está, 
-        if (inputText.trim() == "") return;         //agrego el valor de inputText al array items usando el método setItems y
-        setItems([...items, inputText]);            //si es una cadena vacía no añado nada.
+        if (inputText.trim() == "") return;
+        const newItem = {
+            id: Math.random(),
+            text: `${inputText}`
+        }
+
+        setItems([...items, newItem]);
         setInputText("");
-        console.log(items);
+        // console.log(items);
     };
 
-    const handleDelete = (index) => {
-        const newArr = [...items];                  //Creo un nuevo array q es una copia del array original. 
-        newArr.splice(index, 1);                    //Luego, elimino el elemento correspondiente utilizando el método splice.
-        setItems(newArr);                           //Actualizo el estado de items con el nuevo array.
-    };
+    // const handleDelete = (event) => {
+    //     const newArray = [...items];
+    //     newArray.filter((item) => {
+    //         console.log(item.id != event.target.id);
+    //         return item.id != Number(event.target.id);
+
+    //     })
+    //     setItems(newArray);
+    //     // console.log(newArray);
+    //     }
 
     return (
         <div className="app">
@@ -31,11 +50,18 @@ function App() {
                     <input className="app-input" onChange={updateText} value={inputText} placeholder="I Need To..." />
                     <button className="app-submit" title="Add task"><i className="fas fa-plus"></i></button>
                 </form>
-                <div className="app-li-wrapper">
+                <div className="app-li-wrapper d-block">
                     {items.length === 0 ? (
                         <p>No pending tasks</p>
                     ) : (
-                        <TodoList todoItems={items} onDelete={handleDelete} />
+                        items.map((task, i) => (
+                            <div className="app-li mx-auto" key={i}>
+                                {task.text}
+                                <button id={task.id} className="app-li-delete" onClick={() => setErase(task.id)}>
+                                    &#10006;
+                                </button>
+                            </div>
+                        ))
                     )}
                 </div>
                 <footer className="app-foot">
@@ -46,30 +72,6 @@ function App() {
     );
 }
 
-const TodoList = (props) => {
-    const todoItems = props.todoItems.map((todoItem, index) => {  //index se va
-        return (
-            <TodoItem
-                content={todoItem}
-                key={index}   //Vamos a usar id no index  key={todoItems.id}
-                onDelete={props.onDelete}
-            />
-        );
-    });
-
-    return <ul>{todoItems}</ul>;
-};
-
-const TodoItem = (props) => {
-    return (
-        <div className="app-li">
-            {props.content}
-            <button className="app-li-delete" onClick={() => props.onDelete(props.key)}>
-                &#10006;
-            </button>
-        </div>
-    );
-};
 
 
 export default App;
