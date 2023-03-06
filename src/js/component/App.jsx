@@ -29,7 +29,7 @@ function App() {
                 <h1>To Do List</h1>
                 <form onSubmit={handleSubmit}>
                     <input className="app-input" onChange={updateText} value={inputText} placeholder="I Need To..." />
-                    <button className="app-submit" title="Add task"><i class="fas fa-plus"></i></button>
+                    <button className="app-submit" title="Add task"><i className="fas fa-plus"></i></button>
                 </form>
                 <div className="app-li-wrapper">
                     {items.length === 0 ? (
@@ -38,7 +38,7 @@ function App() {
                         <TodoList todoItems={items} onDelete={handleDelete} />
                     )}
                 </div>
-                <footer class="app-foot">
+                <footer className="app-foot">
                     <p>Made with ❤️ by Sandra </p>
                 </footer>
             </header>
@@ -47,11 +47,11 @@ function App() {
 }
 
 const TodoList = (props) => {
-    const todoItems = props.todoItems.map((todoItem, index) => {
+    const todoItems = props.todoItems.map((todoItem, index) => {  //index se va
         return (
             <TodoItem
                 content={todoItem}
-                key={index}
+                key={index}   //Vamos a usar id no index  key={todoItems.id}
                 onDelete={props.onDelete}
             />
         );
