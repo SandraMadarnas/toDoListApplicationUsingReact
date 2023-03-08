@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ItemsList from "./ItemsList.jsx";
 
 
 function App() {
@@ -30,17 +31,7 @@ function App() {
         setInputText("");
         // console.log(items);
     };
-
-    // const handleDelete = (event) => {
-    //     const newArray = [...items];
-    //     newArray.filter((item) => {
-    //         console.log(item.id != event.target.id);
-    //         return item.id != Number(event.target.id);
-
-    //     })
-    //     setItems(newArray);
-    //     // console.log(newArray);
-    //     }
+ 
 
     return (
         <div className="app">
@@ -50,22 +41,9 @@ function App() {
                     <input className="app-input" onChange={updateText} value={inputText} placeholder="I Need To..." />
                     <button className="app-submit" title="Add task"><i className="fas fa-plus"></i></button>
                 </form>
-                <div className="app-li-wrapper d-block">
-                    {items.length === 0 ? (
-                        <p>No pending tasks</p>
-                    ) : (
-                        items.map((task, i) => (
-                            <div className="app-li mx-auto" key={i}>
-                                {task.text}
-                                <button id={task.id} className="app-li-delete" onClick={() => setErase(task.id)}>
-                                    &#10006;
-                                </button>
-                            </div>
-                        ))
-                    )}
-                </div>
+                <ItemsList listaDeTareas={items} onDelete={setErase} />
                 <footer className="app-foot">
-                    <p>Made with ❤️ by Sandra </p>
+                    <p>Made with ❤️ by Dani & Sandra </p>
                 </footer>
             </header>
         </div>
